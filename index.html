@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapBook - Book Professional Photographers Online</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="showHome()">
+            📸 SnapBook
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="showHome()">Home</a>
+            <a href="#" onclick="showPhotographers()">Photographers</a>
+            <a href="#" onclick="showStudios()">Studios</a>
+            <span id="authLinks">
+                <a href="#" onclick="showLoginForm()">Sign In</a>
+                <a href="#" onclick="showRegisterForm()">Sign Up</a>
+            </span>
+            <span id="userLinks" style="display: none;">
+                <a href="#" onclick="showMyBookings()">My Bookings</a>
+                <a href="#" onclick="logout()">Sign Out</a>
+            </span>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page">
+        <!-- Banner Carousel -->
+        <div class="banner-carousel">
+            <div class="banner-slide active">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&h=400&fit=crop" alt="Wedding Photography">
+                <div class="banner-overlay">
+                    <h2>Wedding Photography</h2>
+                    <p>📸 Capture your special moments with our top photographers</p>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1400&h=400&fit=crop" alt="Portrait Photography">
+                <div class="banner-overlay">
+                    <h2>Portrait Photography</h2>
+                    <p>🎨 Professional portraits that tell your story</p>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&h=400&fit=crop" alt="Event Photography">
+                <div class="banner-overlay">
+                    <h2>Event Photography</h2>
+                    <p>🎉 Every event deserves to be remembered</p>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1400&h=400&fit=crop" alt="Fashion Photography">
+                <div class="banner-overlay">
+                    <h2>Fashion & Portfolio</h2>
+                    <p>✨ Stunning fashion shoots by expert photographers</p>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&h=400&fit=crop" alt="Landscape Photography">
+                <div class="banner-overlay">
+                    <h2>Landscape & Travel</h2>
+                    <p>🌄 Breathtaking landscapes captured by masters</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero">
+            <h1>📸 Find Your Perfect Photographer</h1>
+            <p>Wedding, Portrait, Event, Fashion & more — Book professional photographers in your city!</p>
+            <div id="stats" class="stats-container"></div>
+        </div>
+
+        <div class="section">
+            <h2>⭐ Top Photographers</h2>
+            <div id="homePhotographersList" class="photographers-grid"></div>
+        </div>
+    </div>
+
+    <!-- Photographers Page -->
+    <div id="photographersPage" class="page" style="display: none;">
+        <div class="filters">
+            <select id="cityFilter" onchange="filterPhotographers()">
+                <option value="">All Cities</option>
+            </select>
+            <select id="specialtyFilter" onchange="filterPhotographers()">
+                <option value="">All Specialties</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Portrait">Portrait</option>
+                <option value="Event">Event</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Product">Product</option>
+                <option value="Food">Food</option>
+                <option value="Landscape">Landscape</option>
+                <option value="Newborn">Newborn</option>
+                <option value="Maternity">Maternity</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Wildlife">Wildlife</option>
+                <option value="Architecture">Architecture</option>
+                <option value="Sports">Sports</option>
+            </select>
+            <select id="priceFilter" onchange="filterPhotographers()">
+                <option value="">All Price Ranges</option>
+                <option value="budget">Budget (Under ₹5,000/hr)</option>
+                <option value="mid">Mid-Range (₹5,000 - ₹15,000/hr)</option>
+                <option value="premium">Premium (Above ₹15,000/hr)</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search photographers..." onkeyup="searchPhotographers()">
+        </div>
+        <div id="photographersList" class="photographers-grid"></div>
+    </div>
+
+    <!-- Studios Page -->
+    <div id="studiosPage" class="page" style="display: none;">
+        <div class="filters">
+            <select id="cityStudioFilter" onchange="filterStudios()">
+                <option value="">All Cities</option>
+            </select>
+        </div>
+        <div id="studiosList" class="studios-grid"></div>
+    </div>
+
+    <!-- Photographer Details Page -->
+    <div id="photographerDetailsPage" class="page" style="display: none;">
+        <div id="photographerDetails" class="photographer-details"></div>
+        <div class="section">
+            <h2>📅 Available Sessions</h2>
+            <div class="session-filters">
+                <input type="date" id="sessionDateFilter" onchange="loadSessions()">
+            </div>
+            <div id="sessionsList" class="sessions-list"></div>
+        </div>
+    </div>
+
+    <!-- Booking Page -->
+    <div id="bookingPage" class="page" style="display: none;">
+        <div id="sessionInfo" class="session-info"></div>
+        <div class="booking-form-container">
+            <h3>📦 Select Package</h3>
+            <div id="packagesList" class="packages-list"></div>
+            <h3>📝 Event Details</h3>
+            <div class="event-form">
+                <select id="eventType">
+                    <option value="">Select Event Type</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Engagement">Engagement</option>
+                    <option value="Birthday">Birthday Party</option>
+                    <option value="Corporate">Corporate Event</option>
+                    <option value="Portrait Session">Portrait Session</option>
+                    <option value="Fashion Shoot">Fashion Shoot</option>
+                    <option value="Product Photography">Product Photography</option>
+                    <option value="Baby Shower">Baby Shower</option>
+                    <option value="Anniversary">Anniversary</option>
+                    <option value="Graduation">Graduation</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea id="eventDetails" placeholder="Tell us about your event (venue, number of people, special requirements, themes...)" rows="3"></textarea>
+            </div>
+        </div>
+        <div id="bookingSummary" class="booking-summary"></div>
+        <button id="confirmBookingBtn" class="btn btn-primary" onclick="confirmBooking()" disabled>Confirm Booking</button>
+    </div>
+
+    <!-- My Bookings Page -->
+    <div id="myBookingsPage" class="page" style="display: none;">
+        <h2>My Bookings</h2>
+        <div id="bookingsList" class="bookings-list"></div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login</h2>
+            <form onsubmit="login(event)">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Register</h2>
+            <form onsubmit="register(event)">
+                <input type="text" id="regName" placeholder="Full Name" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="password" id="regPassword" placeholder="Password" required>
+                <input type="tel" id="regPhone" placeholder="Phone Number">
+                <select id="regCity">
+                    <option value="">Select City</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="showLoginForm()">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
